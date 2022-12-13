@@ -1,23 +1,41 @@
 import React, { lazy, Suspense, useEffect } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchContacts } from 'redux/contactSlice/operations';
-import ContactForm from './ContactForm/ContactForm';
-import Filter from './Filter/Filter';
-import ContactList from './ContactList/ContactList';
 import css from './App.module.css';
+import { getAuth, logOut } from 'redux/userSlice/operations';
 
 const LazySignUp = lazy(() => import('../pages/SignUpPage'))
+const LazySignIn = lazy(() => import('../pages/SignInPage'));
+const LazyContacts = lazy(() => import('../pages/ContactsPage'));
+
+
 
 const App = () => {
 
   const dispatch = useDispatch();
+  const { user, isLoading } = useSelector(state => state.userData);
+
+  useEffect(() => {
+    if (!localStorage.getItem('token')) return;
+
+    dispatch(getAuth());
+  }, [dispatch]);
+
+  const onLogOut = () => {
+    dispatch(logOut());
+  };
+
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch])
 
+  const isUserLoggedIn = Boolean(user?.user);
+
+  if (!isUserLoggedIn && isLoading) return <p>Initializing...</p>
   return (
     <div
       style={{
@@ -29,22 +47,34 @@ const App = () => {
         color: '#010101',
       }}
     >
-      <div className={css.paper}>
-        <h1 className={css.title}> Phonebook</h1>
-        <ContactForm />
-
-        <h2 className={css.title}>Contacts</h2>
-        <Filter />
-        <ContactList />
-      </div >
-
+      {
+        isUserLoggedIn ? (
+          <div>
+            <p>
+              Email: <b>{user?.user.email}</b>
+            </p>
+            <p>
+              Name: <b>{user?.user.name}</b>
+            </p>
+          </div >
+        ) : (
+          <p>You are not authorized</p>
+        )}
       <nav className={css.header}>
-        <NavLink to="/sign-up">Register</NavLink>
-
+        <NavLink to="/contacts">Contacts</NavLink>
+        {!isUserLoggedIn && (
+          <>
+            <NavLink to="/register">Register</NavLink>
+            <NavLink to="/sign-in">Login</NavLink>
+          </>
+        )}
+        {isUserLoggedIn && <button onClick={onLogOut}>Log Out</button>}
       </nav>
       <Suspense fallback={<p>Wait, page is downloading...😒</p>}>
         <Routes>
-          <Route path="/sign-up" element={<LazySignUp />} />
+          <Route path="/contacts" element={< LazyContacts />} />
+          <Route path="/register" element={<LazySignUp />} />
+          <Route path="/sign-in" element={<LazySignIn />} />
         </Routes>
       </Suspense>
     </div >

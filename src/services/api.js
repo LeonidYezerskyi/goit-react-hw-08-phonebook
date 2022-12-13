@@ -50,6 +50,18 @@ export const signInRequest = async formData => {
   return data;
 };
 
+export const getAuthRequest = async () => {
+  const { data } = await $privateHost.get('/users/current');
+
+  return data;
+};
+
+export const logOutRequest = async () => {
+  const { data } = await $privateHost.post('/users/logout');
+
+  return data;
+};
+
 export const getContactsRequest = async () => {
   const { data } = await $privateHost.get('contacts');
 

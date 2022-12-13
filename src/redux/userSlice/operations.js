@@ -1,6 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 // import localStorage from 'redux-persist/es/storage';
-import { signInRequest, signUpRequest } from 'services/api';
+import {
+  getAuthRequest,
+  logOutRequest,
+  signInRequest,
+  signUpRequest,
+} from 'services/api';
 
 export const signUp = createAsyncThunk(
   'user/signUp',
@@ -28,3 +33,24 @@ export const signIn = createAsyncThunk(
     }
   }
 );
+
+export const getAuth = createAsyncThunk('user/getAuth', async (_, thunkApi) => {
+  try {
+    const userData = await getAuthRequest();
+
+    return userData;
+  } catch (e) {
+    return thunkApi.rejectWithValue(e);
+  }
+});
+
+export const logOut = createAsyncThunk('user/logOut', async (_, thunkApi) => {
+  try {
+    await logOutRequest();
+    localStorage.removeItem('token');
+
+    return null;
+  } catch (e) {
+    return thunkApi.rejectWithValue(e);
+  }
+});

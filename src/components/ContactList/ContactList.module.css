@@ -1,0 +1,21 @@
+.sectionList {
+align-items: center;
+    justify-content: center;
+    align-content: center;
+    max-width: 100%;
+        height: 300px;
+        overflow: scroll;
+}
+
+.list {
+    background-color: rgb(236, 255, 128);
+    padding-left: 10px;
+    border: 1px solid black;
+    
+}
+
+.notification {
+    padding-left: 10px;
+    font-size: 18px;
+    font-weight: 700;
+}

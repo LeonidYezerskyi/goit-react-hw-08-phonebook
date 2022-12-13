@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
+import { NavLink, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { fetchContacts } from 'redux/contactSlice/operations';
@@ -6,6 +7,8 @@ import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
 import css from './App.module.css';
+
+const LazySignUp = lazy(() => import('../pages/SignUpPage'))
 
 const App = () => {
 
@@ -34,6 +37,16 @@ const App = () => {
         <Filter />
         <ContactList />
       </div >
+
+      <nav className={css.header}>
+        <NavLink to="/sign-up">Register</NavLink>
+
+      </nav>
+      <Suspense fallback={<p>Wait, page is downloading...😒</p>}>
+        <Routes>
+          <Route path="/sign-up" element={<LazySignUp />} />
+        </Routes>
+      </Suspense>
     </div >
   );
 }

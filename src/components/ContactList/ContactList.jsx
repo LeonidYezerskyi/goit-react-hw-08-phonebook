@@ -5,11 +5,11 @@ import ContactElement from '../ContactElement/ContactElement';
 import Loader from 'components/Loader/Loader';
 
 const ContactList = () => {
-    const { items, isLoading, error } = useSelector((state) => state.contactsData.contacts);
+    const { contacts, isLoading, error } = useSelector((state) => state.contactsData);
     const filter = useSelector((state) => state.contactsData.filter);
 
-    const filteredContacts = items.filter(
-        item => item.name.toLowerCase().includes(filter.toLowerCase())
+    const filteredContacts = contacts.filter(
+        contact => contact.name.toLowerCase().includes(filter.toLowerCase())
     );
 
     return (
@@ -19,8 +19,8 @@ const ContactList = () => {
             )}
             {isLoading && <Loader />}
             <ul className={css.list}>
-                {filteredContacts.map(({ id, name, phone }) => {
-                    return <ContactElement name={name} phone={phone} key={id} id={id} />
+                {filteredContacts.map(({ id, name, number }) => {
+                    return <ContactElement name={name} number={number} key={id} id={id} />
                 })}
             </ul>
         </section>

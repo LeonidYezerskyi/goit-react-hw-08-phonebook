@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getAuth, logOut, signIn, signUp } from './operations';
 
 const initialState = {
-  user: { name: '', password: '' },
+  user: null,
   isLoading: false,
   error: '',
 };
@@ -44,7 +44,7 @@ export const userSlice = createSlice({
       state.error = '';
     });
     builder.addCase(getAuth.fulfilled, (state, action) => {
-      state.user.user = action.payload;
+      state.user = { user: action.payload };
       state.isLoading = false;
     });
     builder.addCase(getAuth.rejected, (state, action) => {

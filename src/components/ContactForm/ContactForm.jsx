@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import css from './ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
-import { addContact } from 'redux/contactSlice/operations';
+import { addContact } from '../../redux/contactsSlice/operations';
+import css from './ContactForm.module.css';
 
 const INITIAL_FORM_DATA = {
     contactName: '',
@@ -10,7 +10,7 @@ const INITIAL_FORM_DATA = {
 };
 
 const ContactForm = () => {
-    const contacts = useSelector((state) => state.contactsData.contacts.items);
+    const contacts = useSelector((state) => state.contactsData.contacts);
     const [formData, setFormData] = useState(INITIAL_FORM_DATA)
     const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ const ContactForm = () => {
         const newContact = {
             id: nanoid(),
             name: formData.contactName,
-            phone: formData.contactNumber,
+            number: formData.contactNumber,
         };
 
         if (

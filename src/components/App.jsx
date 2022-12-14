@@ -2,18 +2,15 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchContacts } from 'redux/contactSlice/operations';
+import { getAuth } from 'redux/userSlice/operations';
 import css from './App.module.css';
-import { getAuth, logOut } from 'redux/userSlice/operations';
+import UserMenu from './UserMenu/UserMenu';
 
 const LazySignUp = lazy(() => import('../pages/SignUpPage'))
 const LazySignIn = lazy(() => import('../pages/SignInPage'));
 const LazyContacts = lazy(() => import('../pages/ContactsPage'));
 
-
-
 const App = () => {
-
   const dispatch = useDispatch();
   const { user, isLoading } = useSelector(state => state.userData);
 
@@ -22,16 +19,6 @@ const App = () => {
 
     dispatch(getAuth());
   }, [dispatch]);
-
-  const onLogOut = () => {
-    dispatch(logOut());
-  };
-
-  // const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch])
 
   const isUserLoggedIn = Boolean(user?.user);
 
@@ -47,29 +34,25 @@ const App = () => {
         color: '#010101',
       }}
     >
-      {
-        isUserLoggedIn ? (
-          <div>
-            <p>
-              Email: <b>{user?.user.email}</b>
-            </p>
-            <p>
-              Name: <b>{user?.user.name}</b>
-            </p>
-          </div >
-        ) : (
-          <p>You are not authorized</p>
-        )}
+      {isUserLoggedIn ? (
+        <UserMenu />
+      ) : (
+        <p>You are not authorized</p>
+      )}
+
       <nav className={css.header}>
-        <NavLink to="/contacts">Contacts</NavLink>
-        {!isUserLoggedIn && (
+        {isUserLoggedIn ? (
+          <>
+            <NavLink to="/contacts">Contacts</NavLink>
+          </>
+        ) : (
           <>
             <NavLink to="/register">Register</NavLink>
             <NavLink to="/sign-in">Login</NavLink>
           </>
         )}
-        {isUserLoggedIn && <button onClick={onLogOut}>Log Out</button>}
       </nav>
+
       <Suspense fallback={<p>Wait, page is downloading...😒</p>}>
         <Routes>
           <Route path="/contacts" element={< LazyContacts />} />

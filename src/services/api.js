@@ -22,9 +22,8 @@ const authInterceptor = config => {
 $privateHost.interceptors.request.use(authInterceptor);
 
 export const signUpRequest = async formData => {
-  const { data } = await $publicHost.post('users/signup', formData);
-
-  return data;
+  const response = await $publicHost.post('users/signup', formData);
+  return response.data;
 };
 
 export const signInRequest = async formData => {

@@ -13,7 +13,7 @@ const UserMenu = () => {
     };
 
     return (
-        <div>
+        <div className={css.userMenu}>
             <p className={css.infoWrapper1}>
                 <span className={css.itemTitle}>Email:</span> <span className={css.nameInfo}>{user?.user.email}</span>
             </p>

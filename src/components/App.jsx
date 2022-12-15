@@ -3,9 +3,9 @@ import { NavLink, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getAuth } from 'redux/userSlice/operations';
-import css from './App.module.css';
 import UserMenu from './UserMenu/UserMenu';
 
+const LazyHomePage = lazy(() => import("../pages/NavigationPage"));
 const LazySignUp = lazy(() => import('../pages/SignUpPage'))
 const LazySignIn = lazy(() => import('../pages/SignInPage'));
 const LazyContacts = lazy(() => import('../pages/ContactsPage'));
@@ -34,27 +34,34 @@ const App = () => {
         color: '#010101',
       }}
     >
-      {isUserLoggedIn ? (
-        <UserMenu />
-      ) : (
-        <p>You are not authorized</p>
-      )}
-
-      <nav className={css.header}>
+      <div>
+        <h1>PhoneBook</h1>
         {isUserLoggedIn ? (
-          <>
-            <NavLink to="/contacts">Contacts</NavLink>
-          </>
+          <UserMenu />
         ) : (
-          <>
-            <NavLink to="/register">Register</NavLink>
-            <NavLink to="/sign-in">Login</NavLink>
-          </>
+          <p>You are not authorized</p>
         )}
-      </nav>
+
+        <>
+          <NavLink to='/'>
+            Home
+          </NavLink>
+          {isUserLoggedIn ? (
+            <>
+              <NavLink to="/contacts">Contacts</NavLink>
+            </>
+          ) : (
+            <>
+              <NavLink to="/register">Register</NavLink>
+              <NavLink to="/sign-in">Login</NavLink>
+            </>
+          )}
+        </>
+      </div>
 
       <Suspense fallback={<p>Wait, page is downloading...😒</p>}>
         <Routes>
+          <Route path="/" element={< LazyHomePage />} />
           <Route path="/contacts" element={< LazyContacts />} />
           <Route path="/register" element={<LazySignUp />} />
           <Route path="/sign-in" element={<LazySignIn />} />

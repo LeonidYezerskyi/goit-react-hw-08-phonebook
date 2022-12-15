@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/750.207580ff.chunk.css","mappings":"AAAA,0BAEI,wBAAoC,CACpC,qBAAuB,CAFvB,cAAe,CAGf,YACJ","sources":["components/Navigation/Navigation.module.css"],"sourcesContent":[".header {\n    max-width: 100%;\n    background-color: rgb(233, 227, 227);\n    border: 3px solid black;\n    padding: 20px;\n}\n"],"names":[],"sourceRoot":""}

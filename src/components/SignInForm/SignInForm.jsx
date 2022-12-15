@@ -59,7 +59,7 @@ function SignInForm({ isLoading }) {
                 <p className={css.title}>Password:</p>
                 <input
                     className={css.inputPaper}
-                    type="text"
+                    type="password"
                     name="password"
                     onChange={onChange}
                     value={formData.password}

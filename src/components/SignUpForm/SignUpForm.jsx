@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { signUp } from 'redux/userSlice/operations';
+import css from './SignUpForm.module.css'
 
 function SignUpForm({ isLoading }) {
     const [formData, setFormData] = useState({
@@ -41,31 +42,36 @@ function SignUpForm({ isLoading }) {
     };
 
     return (
-        <form onSubmit={onSubmit}>
-            <h2 className="form-title">Sign up</h2>
-            <label className="input-group">
-                <span>Name:</span>
+        <form className={css.form} onSubmit={onSubmit}>
+            <h2 className={css.formTitle}>Sign up</h2>
+            <label>
+                <p className={css.title}>Name</p>
                 <input
+                    className={css.inputPaper}
                     type="text"
                     name="name"
                     onChange={onChange}
                     value={formData.name}
+                    placeholder='Write your name'
                     required
                 />
             </label>
-            <label className="input-group">
-                <span>Email:</span>
+            <label>
+                <p className={css.title}>Email</p>
                 <input
+                    className={css.inputPaper}
                     type="text"
                     name="email"
                     onChange={onChange}
                     value={formData.email}
+                    placeholder='Write your email'
                     required
                 />
             </label>
-            <label className="input-group">
-                <span>Password:</span>
+            <label>
+                <p className={css.title}>Password</p>
                 <input
+                    className={css.inputPaper}
                     type="text"
                     name="password"
                     onChange={onChange}
@@ -75,7 +81,7 @@ function SignUpForm({ isLoading }) {
                 />
             </label>
 
-            <button type="submit" disabled={isLoading}>Sign up</button>
+            <button className={css.button} type="submit" disabled={isLoading}>Sign up</button>
         </form>
     );
 }

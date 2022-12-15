@@ -15,7 +15,6 @@ function SignInPage() {
 
     return (
         <div>
-            <h1>Sign In</h1>
             {error.length > 0 && <p>Some error occured... With message {error}</p>}
             <SignInForm isLoading={isLoading} />
         </div>

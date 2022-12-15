@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { signIn } from 'redux/userSlice/operations';
+import css from './SignInForm.module.css'
 
 function SignInForm({ isLoading }) {
     const [formData, setFormData] = useState({
@@ -39,31 +40,35 @@ function SignInForm({ isLoading }) {
     };
 
     return (
-        <form onSubmit={onSubmit}>
-            <h2 className="form-title">Log in</h2>
+        <form className={css.form} onSubmit={onSubmit}>
+            <h2 className={css.formTitle}>Log in</h2>
 
-            <label className="input-group">
-                <span>Email:</span>
+            <label>
+                <p className={css.title}>Email</p>
                 <input
+                    className={css.inputPaper}
                     type="text"
                     name="email"
                     onChange={onChange}
                     value={formData.email}
+                    placeholder='Write your name'
                     required
                 />
             </label>
-            <label className="input-group">
-                <span>Password:</span>
+            <label>
+                <p className={css.title}>Password:</p>
                 <input
+                    className={css.inputPaper}
                     type="text"
                     name="password"
                     onChange={onChange}
                     value={formData.password}
+                    placeholder='Write your email'
                     required
                 />
             </label>
 
-            <button type="submit" disabled={isLoading}>Sign in</button>
+            <button className={css.button} type="submit" disabled={isLoading}>Sign in</button>
         </form>
     );
 }

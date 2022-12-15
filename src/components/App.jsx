@@ -1,9 +1,11 @@
 import React, { lazy, Suspense, useEffect } from 'react';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import cn from 'classnames';
 
 import { getAuth } from 'redux/userSlice/operations';
 import UserMenu from './UserMenu/UserMenu';
+import css from '../components/App.module.css';
 
 const LazyHomePage = lazy(() => import("../pages/NavigationPage"));
 const LazySignUp = lazy(() => import('../pages/SignUpPage'))
@@ -24,39 +26,32 @@ const App = () => {
 
   if (!isUserLoggedIn && isLoading) return <p>Initializing...</p>
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 15,
-        color: '#010101',
-      }}
-    >
-      <div>
-        <h1>PhoneBook</h1>
+    <div>
+      <div className={css.header}>
+        <h1 className={css.title}>PhoneBook</h1>
         {isUserLoggedIn ? (
           <UserMenu />
         ) : (
-          <p>You are not authorized</p>
+          <p className={css.text}>You are not authorized</p>
         )}
 
-        <>
-          <NavLink to='/'>
-            Home
-          </NavLink>
+        <div className={css.navContainer}>
           {isUserLoggedIn ? (
             <>
-              <NavLink to="/contacts">Contacts</NavLink>
+              <NavLink className={({ isActive }) =>
+                cn(css.navPage, { [css.active]: isActive, })} to="/contacts">Contacts</NavLink>
             </>
           ) : (
             <>
-              <NavLink to="/register">Register</NavLink>
-              <NavLink to="/sign-in">Login</NavLink>
+              <NavLink className={({ isActive }) =>
+                cn(css.navPage, { [css.active]: isActive, })} to='/'>Home</NavLink>
+              <NavLink className={({ isActive }) =>
+                cn(css.navPage, { [css.active]: isActive, })} to="/register">Register</NavLink>
+              <NavLink className={({ isActive }) =>
+                cn(css.navPage, { [css.active]: isActive, })} to="/sign-in">Login</NavLink>
             </>
           )}
-        </>
+        </div>
       </div>
 
       <Suspense fallback={<p>Wait, page is downloading...😒</p>}>

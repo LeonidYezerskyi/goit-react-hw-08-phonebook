@@ -5,7 +5,7 @@ import WithAuthRedirect from '../HOC/WithAuthRedirect';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
 import ContactList from 'components/ContactList/ContactList';
-import css from '../components/App.module.css';
+import css from '../components/ContactList/ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/contactsSlice/operations';
 import Loader from 'components/Loader/Loader';
@@ -22,15 +22,15 @@ function ContactsPage() {
 
     return (
         <div className={css.paper}>
-            <h1 className={css.title}> Phonebook</h1>
             <ContactForm />
-
-            <h2 className={css.title}>Contacts</h2>
             <Filter />
-            {error && <p>Some error occured... {error}</p>}
-            {isLoading && <Loader />}
-            {contacts?.length > 0 &&
-                <ContactList />}
+            <div className={css.contactsWrapper}>
+                <h2 className={css.title}>Contact list</h2>
+                {error && <p>Some error occured... {error}</p>}
+                {isLoading && <Loader />}
+                {contacts?.length > 0 ?
+                    <ContactList /> : <p className={css.notification}>There are no contacts yet</p>}
+            </div>
         </div >
     );
 }

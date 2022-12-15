@@ -50,6 +50,7 @@ const ContactForm = () => {
     return (
         <div>
             <form className={css.form} onSubmit={onSubmitForm}>
+                <h2 className={css.formTitle}>Add contact</h2>
                 <label>
                     <p className={css.title}>Name</p>
                     <input
@@ -60,7 +61,7 @@ const ContactForm = () => {
                         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                         onChange={onChange}
                         value={formData.contactName}
-                        placeholder='Write name and family name'
+                        placeholder='Write name'
                         required
                     />
                 </label>

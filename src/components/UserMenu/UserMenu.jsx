@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from 'redux/userSlice/operations';
+import css from './UserMenu.module.css';
 
 
 const UserMenu = () => {
@@ -13,13 +14,13 @@ const UserMenu = () => {
 
     return (
         <div>
-            <p>
-                Email: <b>{user?.user.email}</b>
+            <p className={css.infoWrapper1}>
+                <span className={css.itemTitle}>Email:</span> <span className={css.nameInfo}>{user?.user.email}</span>
             </p>
-            <p>
-                Name: <b>{user?.user.name}</b>
+            <p className={css.infoWrapper}>
+                <span className={css.itemTitle}>Name:</span> <span className={css.nameInfo}>{user?.user.name}</span>
+                <button className={css.button} onClick={onLogOut}>Log Out</button>
             </p>
-            <button onClick={onLogOut}>Logout</button>
         </div >
     )
 }

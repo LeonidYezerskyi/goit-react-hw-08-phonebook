@@ -26,7 +26,7 @@ const App = () => {
 
   if (!isUserLoggedIn && isLoading) return <p>Initializing...</p>
   return (
-    <div>
+    <div >
       <div className={css.header}>
         <h1 className={css.title}>PhoneBook</h1>
         {isUserLoggedIn ? (
